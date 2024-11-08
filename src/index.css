@@ -1,0 +1,21 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Roboto';
+  background-color: #001832;
+}
+
+html, body, #root {
+  height: 100%;
+}
+
+
+@media screen and (max-width: 768px)  {
+  html, body, #root {
+    overflow-x: hidden;
+  }
+}

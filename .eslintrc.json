@@ -1,0 +1,12 @@
+{
+  "extends": [
+    "react-app",
+    "plugin:react/jsx-runtime",
+    "plugin:prettier/recommended"
+  ],
+  "settings": {
+    "react": {
+      "versions": "detect"
+    }
+  }
+}
