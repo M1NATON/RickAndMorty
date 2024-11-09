@@ -12,21 +12,18 @@ export function FilterSelect({ data, type, title }) {
   const [select, setSelect] = useState('');
 
   useEffect(() => {
-    // Обновляем состояние select, когда изменяются фильтры в контексте
     if (type === 'status') {
-      setSelect(statusFilter || ''); // если статус фильтр пустой, сбрасываем select
+      setSelect(statusFilter || '');
     } else if (type === 'gender') {
-      setSelect(genderFilter || ''); // если фильтр пустой, сбрасываем select
+      setSelect(genderFilter || '');
     }
   }, [statusFilter, genderFilter, type]);
 
   const handleChange = (e) => {
     const value = e.target.value;
     setSelect(value);
-
-    // Обновляем соответствующий фильтр в DataProvider
     if (type === 'status') {
-      setStatusFilter(value === 'all' ? '' : value); // Если выбрано "all", сбрасываем фильтр
+      setStatusFilter(value === 'all' ? '' : value);
     } else if (type === 'gender') {
       setGenderFilter(value === 'all' ? '' : value);
     }
