@@ -68,11 +68,15 @@ export function DataProvider({ children }) {
   const updateURL = (newFilters) => {
     if (newFilters.page) setActivePage(newFilters.page);
     if (newFilters.name !== undefined) setNameFilter(newFilters.name);
-    if (newFilters.status !== undefined) setStatusFilter(newFilters.status);
-    if (newFilters.species !== undefined) setSpeciesFilter(newFilters.species);
-    if (newFilters.type !== undefined) setTypeFilter(newFilters.type);
-    if (newFilters.gender !== undefined) setGenderFilter(newFilters.gender);
+    if (newFilters.status !== undefined)
+      setStatusFilter(newFilters.status || '');
+    if (newFilters.species !== undefined)
+      setSpeciesFilter(newFilters.species || '');
+    if (newFilters.type !== undefined) setTypeFilter(newFilters.type || '');
+    if (newFilters.gender !== undefined)
+      setGenderFilter(newFilters.gender || '');
   };
+
   useEffect(() => {
     if (!isFirstLoad) {
       const queryString = buildURL();

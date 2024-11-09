@@ -3,39 +3,45 @@ import { useEffect, useState } from 'react';
 import { useData } from '../providers';
 
 export function FilterSelect({ data, type, title }) {
+  const {
+    statusFilter,
+    genderFilter,
+    setStatusFilter,
+    setGenderFilter
+  } = useData();
   const [select, setSelect] = useState('');
-  const { setStatusFilter, setGenderFilter, updateURL } = useData();
 
   useEffect(() => {
-    if (select !== '') {
-      updateURL({ [type]: select });
-      switch (type) {
-        case 'status':
-          setStatusFilter(select);
-          break;
-        case 'gender':
-          setGenderFilter(select);
-          break;
-        default:
-          break;
-      }
-    } else {
-      updateURL({ [type]: '' });
-      setStatusFilter('');
-      setGenderFilter('');
+    // Обновляем состояние select, когда изменяются фильтры в контексте
+    if (type === 'status') {
+      setSelect(statusFilter || ''); // если статус фильтр пустой, сбрасываем select
+    } else if (type === 'gender') {
+      setSelect(genderFilter || ''); // если фильтр пустой, сбрасываем select
     }
-  }, [select, type, setStatusFilter, setGenderFilter]);
+  }, [statusFilter, genderFilter, type]);
+
+  const handleChange = (e) => {
+    const value = e.target.value;
+    setSelect(value);
+
+    // Обновляем соответствующий фильтр в DataProvider
+    if (type === 'status') {
+      setStatusFilter(value === 'all' ? '' : value); // Если выбрано "all", сбрасываем фильтр
+    } else if (type === 'gender') {
+      setGenderFilter(value === 'all' ? '' : value);
+    }
+  };
 
   return (
     <FilterSelectContainer>
-      <SelectFilter value={select} onChange={(e) => setSelect(e.target.value)}>
-        <FilterselectOption selected disabled value="">
-          Select {title}
-        </FilterselectOption>
+      <SelectFilter value={select} onChange={handleChange}>
+        <FilterSelectOption disabled value="">
+          {`Select ${title}`}
+        </FilterSelectOption>
         {data?.map((option) => (
-          <FilterselectOption key={option.name} value={option.value}>
+          <FilterSelectOption key={option.name} value={option.value}>
             {option.name}
-          </FilterselectOption>
+          </FilterSelectOption>
         ))}
       </SelectFilter>
     </FilterSelectContainer>
@@ -55,4 +61,4 @@ const SelectFilter = styled.select`
   border-radius: 10px;
 `;
 
-const FilterselectOption = styled.option``;
+const FilterSelectOption = styled.option``;
